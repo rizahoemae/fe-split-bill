@@ -2,6 +2,132 @@ import 'package:flutter/material.dart';
 import '../../layout.dart';
 import './widget/recipient.dart';
 import '../../colors.dart';
+import '../receipt/widget/value_text.dart';
+import '../../components/button.dart';
+
+class CardItem extends StatefulWidget {
+  const CardItem({super.key});
+
+  @override
+  State<CardItem> createState() => _CardItemState();
+}
+
+class _CardItemState extends State<CardItem> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: CustomColors.Blue50,
+        borderRadius: BorderRadius.circular(10),
+        border:
+            isChecked == true ? Border.all(color: CustomColors.Blue500) : null,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10,
+            children: [
+              SizedBox(
+                width: 45,
+                child: Checkbox(
+                  side: const BorderSide(color: CustomColors.Blue500),
+                  activeColor: CustomColors.Blue500,
+                  tristate: true,
+                  value: isChecked,
+                  // fillColor: CustomColors.Blue500,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value ?? false;
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text("Mie Gacoan Lvl 1"), Text("1x")],
+                ),
+              ),
+              Expanded(child: Text("Rp10.000", textAlign: TextAlign.end)),
+            ],
+          ),
+          SingleChildScrollView(
+            child: Row(
+              spacing: 0,
+              children: [
+                isChecked == true
+                    ? Expanded(
+                      child: Container(
+                        height: 35,
+                        child: Stack(
+                          children: [
+                            for (var i = 0; i < 5; i++)
+                              Positioned(
+                                top: 0,
+                                left: i * 20,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: CustomColors.Blue500,
+                                    ),
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      'https://i.pinimg.com/736x/10/c0/02/10c00261d6c19cc605c13bc2a2a78fdc.jpg',
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    )
+                    : Container(),
+                isChecked == true
+                    ? SizedBox(
+                      child: OutlinedButton(
+                        style: FilledButton.styleFrom(
+                          // backgroundColor: Colors.white,
+                          foregroundColor: CustomColors.Blue500,
+                          side: const BorderSide(
+                            color: CustomColors.Blue500,
+                            width: 1,
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Split bill'),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 15,
+                              color: CustomColors.Blue500,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                    : Container(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class SplitBillPage extends StatefulWidget {
   const SplitBillPage({super.key});
@@ -72,23 +198,26 @@ class _SplitBillPageState extends State<SplitBillPage> {
                   children: [
                     TabBar(
                       indicatorSize: TabBarIndicatorSize.label,
-                      padding: EdgeInsets.fromLTRB(30, 13, 30, 13),
                       indicator: BoxDecoration(
                         color: CustomColors.Blue200,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       tabs: [
                         Container(
+                          width: double.infinity,
                           padding: EdgeInsets.fromLTRB(30, 13, 30, 13),
                           child: Text(
                             'Custom Split',
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: CustomColors.Blue500),
                           ),
                         ),
                         Container(
+                          width: double.infinity,
                           padding: EdgeInsets.fromLTRB(30, 13, 30, 13),
                           child: Text(
                             'Equal Split',
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: CustomColors.Blue500),
                           ),
                         ),
@@ -97,10 +226,69 @@ class _SplitBillPageState extends State<SplitBillPage> {
                       dividerHeight: 0,
                     ),
                     Container(
-                      height: 300,
+                      height: MediaQuery.of(context).size.height,
                       child: TabBarView(
                         children: [
-                          Center(child: Text("Isi Tab 1")),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                            child: Column(
+                              spacing: 10,
+                              children: [
+                                for (var i = 0; i < 5; i++) CardItem(),
+                                SizedBox(height: 15),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: CustomColors.Blue50,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    spacing: 5,
+                                    children: [
+                                      ValueText(
+                                        title: 'Total',
+                                        value: 'Rp10.000',
+                                        bold: true,
+                                      ),
+                                      ValueText(
+                                        title: 'Pajak',
+                                        value: 'Rp10.000',
+                                      ),
+                                      ValueText(
+                                        title: 'Service',
+                                        value: 'Rp10.000',
+                                      ),
+                                      ValueText(
+                                        title: 'Discount',
+                                        value: 'Rp10.000',
+                                      ),
+                                      ValueText(
+                                        title: 'Others',
+                                        value: 'Rp10.000',
+                                      ),
+                                      ValueText(
+                                        title: 'Total',
+                                        value: 'Rp10.000',
+                                        bold: true,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 15),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ButtonCustom(
+                                    label: 'Continue',
+                                    onPressed: () {
+                                      // Handle save action
+                                    },
+                                    type: ButtonType.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           Center(child: Text("Isi Tab 2")),
                         ],
                       ),
