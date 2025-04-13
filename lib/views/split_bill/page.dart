@@ -137,6 +137,63 @@ class SplitBillPage extends StatefulWidget {
 }
 
 class _SplitBillPageState extends State<SplitBillPage> {
+  Future<void> _openDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: CustomColors.Blue50,
+          content: SizedBox(
+            height: 181,
+            child: Column(
+              spacing: 10,
+              children: [
+                Text(
+                  'Transfer Details',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 100,
+                  child: TextField(
+                    expands: true,
+                    minLines: null,
+                    maxLines: null,
+                    textAlign: TextAlign.start,
+                    decoration: InputDecoration(
+                      hintText: 'Ex: BCA - 1212675218',
+                      hintStyle: TextStyle(color: CustomColors.Blue300),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: CustomColors.Blue500),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: CustomColors.Blue500),
+                      ),
+                      filled: true,
+                      fillColor: CustomColors.Blue50,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ButtonCustom(
+                    label: 'Complete',
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    type: ButtonType.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Layout(
@@ -281,7 +338,7 @@ class _SplitBillPageState extends State<SplitBillPage> {
                                   child: ButtonCustom(
                                     label: 'Continue',
                                     onPressed: () {
-                                      // Handle save action
+                                      _openDialog(context);
                                     },
                                     type: ButtonType.primary,
                                   ),
