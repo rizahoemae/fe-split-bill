@@ -252,7 +252,7 @@ class _SplitBillPageState extends State<SplitBillPage> {
                 ),
               ),
               DefaultTabController(
-                initialIndex: 1,
+                initialIndex: 0,
                 length: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
