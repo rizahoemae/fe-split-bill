@@ -4,6 +4,7 @@ import './widget/recipient.dart';
 import '../../colors.dart';
 import '../receipt/widget/value_text.dart';
 import '../../components/button.dart';
+import 'confirm.dart';
 
 class CardItem extends StatefulWidget {
   const CardItem({super.key});
@@ -144,7 +145,7 @@ class _SplitBillPageState extends State<SplitBillPage> {
         return AlertDialog(
           backgroundColor: CustomColors.Blue50,
           content: SizedBox(
-            height: 181,
+            height: 200,
             child: Column(
               spacing: 10,
               children: [
@@ -181,7 +182,10 @@ class _SplitBillPageState extends State<SplitBillPage> {
                   child: ButtonCustom(
                     label: 'Complete',
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ConfirmPage()),
+                      );
                     },
                     type: ButtonType.primary,
                   ),
